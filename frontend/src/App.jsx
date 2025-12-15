@@ -1,35 +1,45 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
 
+const API_URL = "https://rag-chat-system-2-f9yj.onrender.com/ask";
+
 function App() {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef(null);
 
-  // Scroll to bottom when chat updates
+  // Auto scroll
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat]);
+  }, [chat, loading]);
 
   const sendMessage = async () => {
-    if (!message.trim()) return;
+    if (!message.trim() || loading) return;
 
     const userText = message;
+
     setChat((prev) => [...prev, { role: "user", text: userText }]);
     setMessage("");
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/chat", {
+      const res = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userText }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: userText, // ✅ BACKEND MATCH
+        }),
       });
 
+      if (!res.ok) throw new Error("API error");
+
       const data = await res.json();
-      typeBotReply(data.reply || "No response");
+      typeBotReply(data.answer || "No response from RAG");
     } catch (err) {
+      console.error(err);
       typeBotReply("Server error. Please try again.");
     }
   };
@@ -41,7 +51,7 @@ function App() {
     setChat((prev) => [...prev, { role: "bot", text: "" }]);
 
     const interval = setInterval(() => {
-      currentText += text[index];
+      currentText += text[index] || "";
       index++;
 
       setChat((prev) => {
@@ -54,7 +64,7 @@ function App() {
         clearInterval(interval);
         setLoading(false);
       }
-    }, 20); // typing speed
+    }, 20);
   };
 
   return (
@@ -81,8 +91,11 @@ function App() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          disabled={loading}
         />
-        <button onClick={sendMessage}>Send</button>
+        <button onClick={sendMessage} disabled={loading}>
+          Send
+        </button>
       </div>
     </div>
   );
