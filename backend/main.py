@@ -8,7 +8,7 @@ app = FastAPI()
 # ✅ CORS – MUST
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],          # Vercel URL potaalum ok
+    allow_origins=["https://rag-chat-system-indhra.vercel.app"],          # Vercel URL potaalum ok
     allow_credentials=True,
     allow_methods=["*"],          # 👈 OPTIONS allow aagum
     allow_headers=["*"],
