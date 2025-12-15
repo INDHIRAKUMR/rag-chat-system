@@ -30,8 +30,7 @@ function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          query: userText, // ✅ BACKEND MATCH
-        }),
+        question: userText}),
       });
 
       if (!res.ok) throw new Error("API error");
