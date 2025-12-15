@@ -1,0 +1,203 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "Segoe UI", Roboto, sans-serif;
+
+  /* PAGE BACKGROUND */
+  --page-bg: radial-gradient(circle at top, #1b1f2a, #0b0d12);
+
+  /* APP */
+  --app-bg: rgba(18, 20, 30, 0.85);
+
+  /* HEADER */
+  --header-bg: linear-gradient(135deg, #121826, #0b0d12);
+  --header-text: #f9fafb;
+
+  /* CHAT BUBBLES */
+  --user-bubble: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  --bot-bubble: rgba(255, 255, 255, 0.06);
+
+  /* INPUT */
+  --input-bg: rgba(255, 255, 255, 0.08);
+  --input-border: rgba(255, 255, 255, 0.15);
+
+  /* BUTTON */
+  --button-bg: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  --button-hover: linear-gradient(135deg, #0284c7, #0369a1);
+
+  /* TEXT */
+  --text-color: #e5e7eb;
+  --secondary-text: #9ca3af;
+}
+
+/* BODY */
+body {
+  margin: 0;
+  height: 100vh;
+  background: var(--page-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* APP */
+.app {
+  width: 100%;
+  max-width: 760px;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--app-bg);
+  backdrop-filter: blur(35px);
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* HEADER */
+.header {
+  padding: 26px;
+  text-align: center;
+  background: var(--header-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--header-text);
+  letter-spacing: -0.4px;
+}
+
+.header p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--secondary-text);
+}
+
+/* CHAT */
+.chat-box {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* MESSAGE */
+.message {
+  max-width: 70%;
+  padding: 16px 22px;
+  border-radius: 22px;
+  font-size: 15px;
+  line-height: 1.6;
+  animation: fadeIn 0.25s ease;
+}
+
+/* USER */
+.message.user {
+  align-self: flex-end;
+  background: var(--user-bubble);
+  color: #ffffff;
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 12px 30px rgba(66, 101, 118, 0.45);
+}
+
+/* BOT */
+.message.bot {
+  align-self: flex-start;
+  background: var(--bot-bubble);
+  color: var(--text-color);
+  border-bottom-left-radius: 6px;
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* INPUT AREA */
+.input-area {
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  background: rgba(18, 20, 30, 0.75);
+  backdrop-filter: blur(30px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* INPUT */
+.input-area input {
+  flex: 1;
+  padding: 16px 20px;
+  border-radius: 24px;
+  border: 1px solid var(--input-border);
+  outline: none;
+  font-size: 15px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  transition: all 0.25s ease;
+}
+
+.input-area input::placeholder {
+  color: #9ca3af;
+}
+
+.input-area input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2);
+}
+
+/* BUTTON */
+.input-area button {
+  padding: 16px 28px;
+  border-radius: 24px;
+  border: none;
+  background: var(--button-bg);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 14px 40px rgba(14, 165, 233, 0.45);
+}
+
+.input-area button:hover {
+  background: var(--button-hover);
+  transform: translateY(-2px);
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .app {
+    height: 100vh;
+    max-width: 100%;
+    border-radius: 0;
+  }
+
+  .header h1 {
+    font-size: 1.9rem;
+  }
+
+  .message {
+    max-width: 85%;
+  }
+
+  .input-area input,
+  .input-area button {
+    padding: 14px;
+    font-size: 14px;
+  }
+}
