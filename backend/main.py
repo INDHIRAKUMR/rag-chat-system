@@ -3,32 +3,26 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from rag import get_answer
 
-app = FastAPI(
-    title="RAG Chat API",
-    version="1.0.0"
-)
+app = FastAPI()
 
-# ✅ CORS (Vercel + Localhost safe)
+# ✅ CORS – MUST
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # production la specific URL kudukalaam
+    allow_origins=["*"],          # Vercel URL potaalum ok
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["*"],          # 👈 OPTIONS allow aagum
     allow_headers=["*"],
 )
 
-# ✅ Request schema (FRONTEND MATCH)
 class Query(BaseModel):
-    query: str
-
-@app.get("/")
-def root():
-    return {"status": "RAG backend running"}
+    question: str
 
 @app.post("/ask")
-def ask(data: Query):
-    try:
-        answer = get_answer(data.query)
-        return {"answer": answer}
-    except Exception as e:
-        return {"answer": f"Error: {str(e)}"}
+async def ask(query: Query):
+    answer = get_answer(query.question)
+    return {"answer": answer}
+
+# 👇 OPTIONAL: root route (404 avoid panna)
+@app.get("/")
+def root():
+    return {"status": "RAG API running"}
