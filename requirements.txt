@@ -3,10 +3,8 @@ uvicorn==0.23.1
 python-multipart==0.0.6
 requests==2.31.0
 
-# Transformers stack (Render safe)
-transformers==4.36.2
-tokenizers==0.15.0
-huggingface-hub==0.20.2
+# Embeddings (safe)
+sentence-transformers==2.2.2
 
 # Torch (Python 3.11 compatible)
 torch==2.1.2
