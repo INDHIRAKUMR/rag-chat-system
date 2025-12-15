@@ -3,14 +3,10 @@ uvicorn==0.23.1
 python-multipart==0.0.6
 requests==2.31.0
 
-# 🔹 RAG / Embeddings
 sentence-transformers==2.2.2
-faiss-cpu==1.7.4
-
-# 🔹 LLM
+faiss-cpu==1.9.0.post1
 groq==0.9.0
 
-# 🔹 Utilities (safe & recommended)
 numpy
 scipy
 pydantic
